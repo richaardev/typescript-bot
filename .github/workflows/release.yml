@@ -24,7 +24,7 @@ jobs:
         run: npm run build
 
       - name: Setup Square Cloud
-        uses: squarecloudofc/github-action@v2.0.0
+        uses: squarecloudofc/github-action@v2
         with:
           token: '${{ secrets.SQUARE_TOKEN }}'
           install-only: true
