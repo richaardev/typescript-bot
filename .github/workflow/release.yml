@@ -1,0 +1,34 @@
+name: Publish to production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-production:
+    name: Publish to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Setup Square Cloud
+        uses: squarecloudofc/github-action@v2
+        with:
+          token: '${{ secrets.SQUARE_TOKEN }}'
+          install-only: true
+
+      - name: Commit discord bot to square cloud
+        run: squarecloud commit ${{ secrets.SQUARECLOUD_APPLICATION_ID }}
